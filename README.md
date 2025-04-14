@@ -1,6 +1,4 @@
-# Шаблон проекта к курсу "Domain Driven Design и Clean Architecture на языке C#"
-
-Этот репозиторий содержит стартовый шаблон и примеры кода, предоставленные в рамках обучающего курса **"Domain Driven Design и Clean Architecture на языке C#"**.
+# Демо проект к курсу "Domain Driven Design и Clean Architecture на языке C#"
 
 📚 Подробнее о курсе: [microarch.ru/courses/ddd/languages/csharp](http://microarch.ru/courses/ddd/languages/csharp)
 
