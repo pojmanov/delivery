@@ -12,11 +12,6 @@
 
 ---
 
-## Лицензия
-
-Код распространяется под лицензией [MIT](./LICENSE).  
-© 2025 microarch.ru
-
 # OpenApi 
 Вызывать из папки DeliveryApp.Api/Adapters/Http/Contract
 ```
@@ -78,3 +73,8 @@ INSERT INTO public.couriers(
     id, name, transport_id, location_x, location_y, status)
 VALUES ('407f68be-5adf-4e72-81bc-b1d8e9574cf8', 'Авто', 'c24d3116-a75c-4a4b-9b22-1a7dc95a8c79', 7,9, 'free');     
 ```
+
+## Лицензия
+
+Код распространяется под лицензией [MIT](./LICENSE).  
+© 2025 microarch.ru
