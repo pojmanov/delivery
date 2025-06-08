@@ -1,6 +1,6 @@
 # Демо проект к курсу "Domain Driven Design и Clean Architecture на языке C#"
 
-📚 Подробнее о курсе: [microarch.ru/courses/ddd/languages/csharp](http://microarch.ru/courses/ddd/languages/csharp)
+📚 Подробнее о курсе: [microarch.ru/courses/ddd/languages/csharp](https://microarch.ru/courses/ddd/languages/csharp?utm_source=gitlab&utm_medium=repository)
 
 ---
 
@@ -72,7 +72,7 @@ INSERT INTO public.couriers(
 VALUES ('407f68be-5adf-4e72-81bc-b1d8e9574cf8', 'Авто', 'c24d3116-a75c-4a4b-9b22-1a7dc95a8c79', 7,9, 'free');     
 ```
 
-## Лицензия
+# Лицензия
 
 Код распространяется под лицензией [MIT](./LICENSE).  
 © 2025 microarch.ru
