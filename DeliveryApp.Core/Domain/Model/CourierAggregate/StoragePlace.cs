@@ -78,7 +78,7 @@ namespace DeliveryApp.Core.Domain.Model.CourierAggregate
             // с другой стороны, сам по себе как ID он особо не используется
             if (!CanStore(volume)) // volume повторно не проверяю на допустимые значение, т.к. это делается в CanStore
             {
-                throw new Exception("The order could not be placed into storage.");
+                throw new StoragePlaceException(Errors.CantStore);
             }
             OrderId = orderId;
         }
@@ -101,5 +101,10 @@ namespace DeliveryApp.Core.Domain.Model.CourierAggregate
         /// </summary>
         /// <returns></returns>
         public bool IsOccupied() => OrderId.HasValue;
+
+        private static class Errors
+        {
+            public const string CantStore = "The order could not be placed into storage.";
+        }
     }
 }
