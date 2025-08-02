@@ -28,6 +28,11 @@ namespace DeliveryApp.Core.Domain.Model.CourierAggregate
         public Guid? OrderId { get; private set; }
 
         /// <summary>
+        /// EFCore ctor
+        /// </summary>
+        private StoragePlace() { }
+
+        /// <summary>
         /// Создать место хранения
         /// </summary>
         /// <param name="name">Название места хранения</param>

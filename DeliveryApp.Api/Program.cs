@@ -1,5 +1,7 @@
 using DeliveryApp.Api;
 using DeliveryApp.Core.Domain.Services;
+using DeliveryApp.Core.Ports;
+using DeliveryApp.Infrastructure.Adapters.Postgres.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +20,14 @@ builder.Services.AddCors(options =>
 
 // Configuration
 builder.Services.ConfigureOptions<SettingsSetup>();
-builder.Services.AddScoped<IDispatchService, DispatchService>();
 var connectionString = builder.Configuration["CONNECTION_STRING"];
+
+// сервисы
+builder.Services.AddScoped<IDispatchService, DispatchService>();
+
+// репозитории
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<ICourierRepository, CourierRepository>();
 
 var app = builder.Build();
 

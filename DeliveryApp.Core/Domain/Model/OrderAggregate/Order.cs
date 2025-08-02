@@ -32,6 +32,11 @@ public sealed class Order : Aggregate<Guid>
     public Guid? CourierId { get; private set; }
 
     /// <summary>
+    /// EFCore ctor
+    /// </summary>
+    private Order() { }
+
+    /// <summary>
     /// Ctr
     /// </summary>
     /// <param name="orderId">Идентификатор заказа</param>

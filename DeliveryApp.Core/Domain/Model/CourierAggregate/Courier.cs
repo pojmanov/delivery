@@ -34,6 +34,11 @@ namespace DeliveryApp.Core.Domain.Model.CourierAggregate
         public List<StoragePlace> StoragePlaces { get; private set; }
 
         /// <summary>
+        /// EFCore ctor
+        /// </summary>
+        private Courier() { }
+
+        /// <summary>
         /// ctor
         /// </summary>
         /// <param name="courierId"></param>
