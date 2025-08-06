@@ -39,12 +39,12 @@ namespace DeliveryApp.Infrastructure.Adapters.Postgres.Repositories
             return order;
         }
 
-        public IEnumerable<Order> GetAllInAssignedStatus()
+        public IList<Order> GetAllInAssignedStatus()
         {
             var orders = _dbContext
                 .Orders
                 .Where(o => o.Status.Name == OrderStatus.Assigned.Name);
-            return orders;
+            return orders.ToList();
         }
     }
 

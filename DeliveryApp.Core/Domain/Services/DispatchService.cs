@@ -48,11 +48,6 @@ namespace DeliveryApp.Core.Domain.Services
                     }
                 }
             }
-            if (winner == null)
-            {
-                // в принципе можно и null возвращать, тут в зависимости от требований контракта метода
-                throw new DispatchServiceException(Errors.CourierNotFound);
-            }
             return winner;
         }
 

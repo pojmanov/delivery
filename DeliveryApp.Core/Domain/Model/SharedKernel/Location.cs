@@ -40,5 +40,13 @@ namespace DeliveryApp.Core.Domain.Model.SharedKernel
             yield return X;
             yield return Y;
         }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"[X:{X}; Y:{Y}]";
+        }
     }
 }

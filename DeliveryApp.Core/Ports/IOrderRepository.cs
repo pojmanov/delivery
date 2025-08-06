@@ -38,6 +38,6 @@ namespace DeliveryApp.Core.Ports
         /// Получить все назначенные заказы
         /// </summary>
         /// <returns>Заказы</returns>
-        IEnumerable<Order> GetAllInAssignedStatus();
+        IList<Order> GetAllInAssignedStatus();
     }
 }
