@@ -84,8 +84,8 @@ namespace DeliveryApp.UnitTests.Domain.Services
 
             Order order = new Order(Guid.NewGuid(), new Location(1, 1), volume: 20); // объем > 10 который по умолчанию есть у курьеров
             DispatchService dispatchService = new DispatchService();
-            Action act = () => dispatchService.Dispatch(order, couriers);
-            act.Should().Throw<DispatchServiceException>().WithMessage("Courier for order not found.");
+            Courier winner = dispatchService.Dispatch(order, couriers);
+            winner.Should().BeNull();
         }
 
         [Fact]

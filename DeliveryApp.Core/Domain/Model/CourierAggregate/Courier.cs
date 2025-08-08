@@ -1,4 +1,5 @@
-﻿using DeliveryApp.Core.Domain.Model.OrderAggregate;
+﻿using CSharpFunctionalExtensions;
+using DeliveryApp.Core.Domain.Model.OrderAggregate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 using Primitives;
 
@@ -163,11 +164,46 @@ namespace DeliveryApp.Core.Domain.Model.CourierAggregate
             return (double) Location.Distance(location) / Speed;
         }
 
+        /// <summary>
+        /// Подвинуть курьера в сторону указанной точки
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns>Местоположение после сдвига</returns>
+        public void Move(Location target)
+        {
+            // алгоритм взял из примера четвертого модуля
+            if (target == null)
+            {
+                throw new ArgumentNullException(nameof(target));
+            }
+
+            int difX = target.X - Location.X;
+            int difY = target.Y - Location.Y;
+            int cruisingRange = Speed;
+
+            var moveX = Math.Clamp(difX, -cruisingRange, cruisingRange);
+            cruisingRange -= Math.Abs(moveX);
+
+            var moveY = Math.Clamp(difY, -cruisingRange, cruisingRange);
+
+            try
+            {
+                var locationCreateResult = new Location(Location.X + moveX, Location.Y + moveY);
+                Location = locationCreateResult;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new CourierException(string.Format(Errors.CantMove, target, Location));
+            }
+        }
+
+
         private static class Errors
         {
             public const string InvalidSpeedValue = "The speed must be positive.";
             public const string CantСompleteOrder = "The specified order could not be completed.";
             public const string CantStore = "The order could not be placed into storage.";
+            public const string CantMove = "Cant move Courier to target location {0} (current location: {0})";
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using DeliveryApp.Core.Domain.Model.CourierAggregate;
-using DeliveryApp.Core.Domain.Model.OrderAggregate;
 using DeliveryApp.Core.Ports;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace DeliveryApp.Infrastructure.Adapters.Postgres.Repositories
 {
@@ -57,10 +55,10 @@ namespace DeliveryApp.Infrastructure.Adapters.Postgres.Repositories
         /// Получить всех свободных курьеров (курьеры, у которых все места хранения свободны)
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Courier> GetAllAvailable()
+        public IList<Courier> GetAllAvailable()
         {
             return _dbContext.Couriers
-               .Where(c => c.StoragePlaces.All(sp => sp.OrderId == null));
+               .Where(c => c.StoragePlaces.All(sp => sp.OrderId == null)).ToList();
         }
     }
 }
