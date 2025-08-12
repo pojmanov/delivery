@@ -13,6 +13,7 @@ namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrder
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IOrderRepository _orderRepository;
+        private readonly IGeoClient _geoClient;
 
         /// <summary>
         /// ctor
@@ -20,10 +21,11 @@ namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrder
         /// <param name="unitOfWork"></param>
         /// <param name="orderRepository"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public CreateOrderHandler(IUnitOfWork unitOfWork, IOrderRepository orderRepository)
+        public CreateOrderHandler(IUnitOfWork unitOfWork, IOrderRepository orderRepository, IGeoClient geoClient)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
+            _geoClient = geoClient ?? throw new ArgumentNullException(nameof(geoClient));
         }
 
         /// <summary>
@@ -43,7 +45,8 @@ namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrder
             // TODO
             // тут мы должны сначала по ID корзины получить ее агрегат,
             // но т.к. пока у нас этого нет, поэтому рандомно заполним Location и volume
-            Location orderLocation = Location.GetRandomLocation();
+            
+            Location orderLocation = await _geoClient.GetLocationAsync(request.Street, cancellationToken);
             int orderVolume = Random.Shared.Next(1, 21); // от одного до 20
 
             Order order = new Order(request.BasketId, orderLocation, orderVolume);
