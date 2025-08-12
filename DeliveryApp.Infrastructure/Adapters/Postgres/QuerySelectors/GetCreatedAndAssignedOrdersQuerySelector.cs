@@ -44,8 +44,8 @@ namespace DeliveryApp.Infrastructure.Adapters.Postgres.QuerySelectors
                 connection.Open();
                 using var command = connection.CreateCommand();
                 command.CommandText = Sql;
-                command.Parameters.Add(new NpgsqlParameter("p1", OrderStatus.Created) { NpgsqlDbType = NpgsqlDbType.Text });
-                command.Parameters.Add(new NpgsqlParameter("p2", OrderStatus.Assigned) { NpgsqlDbType = NpgsqlDbType.Text });
+                command.Parameters.Add(new NpgsqlParameter("p1", OrderStatus.Created.Name) { NpgsqlDbType = NpgsqlDbType.Text });
+                command.Parameters.Add(new NpgsqlParameter("p2", OrderStatus.Assigned.Name) { NpgsqlDbType = NpgsqlDbType.Text });
 
                 using var reader = await command.ExecuteReaderAsync(cancellationToken);
                 while (reader.Read())
