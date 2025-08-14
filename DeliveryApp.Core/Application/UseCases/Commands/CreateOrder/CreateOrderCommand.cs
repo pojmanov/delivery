@@ -19,15 +19,21 @@ namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrder
         public string Street { get; }
 
         /// <summary>
+        /// Объем заказа
+        /// </summary>
+        public int Volume { get; }
+
+        /// <summary>
         /// ctor
         /// </summary>
         /// <param name="basketId"></param>
         /// <param name="street"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public CreateOrderCommand(Guid basketId, string street)
+        public CreateOrderCommand(Guid basketId, string street, int volume)
         {
             BasketId = basketId != Guid.Empty ? basketId : throw new ArgumentNullException(nameof(basketId));
             Street = !string.IsNullOrWhiteSpace(street) ? street : throw new ArgumentNullException(nameof(street));
+            Volume = volume > 0 ? volume : throw new ArgumentOutOfRangeException(nameof(volume));
         }
     }
 }

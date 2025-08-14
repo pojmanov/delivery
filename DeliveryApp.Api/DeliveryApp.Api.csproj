@@ -46,8 +46,12 @@
     </ItemGroup>
     <ItemGroup>
         <None Remove="Adapters\Kafka\BasketConfirmed\Contract.proto" />
+        <None Remove="Adapters\Kafka\CreateOrder\Contract.proto" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Adapters\Http\Contract\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Protobuf Include="Adapters\Kafka\CreateOrder\Contract.proto" />
     </ItemGroup>
 </Project>

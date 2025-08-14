@@ -47,9 +47,8 @@ namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrder
             // но т.к. пока у нас этого нет, поэтому рандомно заполним Location и volume
             
             Location orderLocation = await _geoClient.GetLocationAsync(request.Street, cancellationToken);
-            int orderVolume = Random.Shared.Next(1, 21); // от одного до 20
 
-            Order order = new Order(request.BasketId, orderLocation, orderVolume);
+            Order order = new Order(request.BasketId, orderLocation, request.Volume);
             await _orderRepository.AddAsync(order);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
