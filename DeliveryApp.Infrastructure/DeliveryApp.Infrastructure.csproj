@@ -34,9 +34,14 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Remove="Adapters\Grpc\GeoSerive\Contract.proto" />
         <None Remove="Adapters\Grpc\GeoService\grpc.proto" />
         <None Remove="Adapters\Kafka\BasketConfirmed\Contract.proto" />
         <None Remove="Adapters\Grpc\GeoService\Contract.proto" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Protobuf Include="Adapters\Grpc\GeoSerive\Contract.proto" />
     </ItemGroup>
 
 </Project>

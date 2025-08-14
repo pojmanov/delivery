@@ -1,3 +1,4 @@
+using Confluent.Kafka;
 using DeliveryApp.Api;
 using DeliveryApp.Core.Application.UseCases.Commands.AssignCouriersToOrders;
 using DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
@@ -7,14 +8,15 @@ using DeliveryApp.Core.Application.UseCases.Queries.GetBusyCouriers;
 using DeliveryApp.Core.Application.UseCases.Queries.GetCreatedAndAssignedOrders;
 using DeliveryApp.Core.Domain.Services;
 using DeliveryApp.Core.Ports;
+using DeliveryApp.Infrastructure.Adapters.Grpc.GeoSerive;
 using DeliveryApp.Infrastructure.Adapters.Postgres;
 using DeliveryApp.Infrastructure.Adapters.Postgres.QuerySelectors;
 using DeliveryApp.Infrastructure.Adapters.Postgres.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using OpenApi.Filters;
 using OpenApi.Formatters;
 using OpenApi.OpenApi;
@@ -75,6 +77,9 @@ builder.Services.AddScoped<IRequestHandler<AssignCouriersToOrdersCommand>, Assig
 // Queries
 builder.Services.AddScoped<IRequestHandler<GetCreatedAndAssignedOrdersQuery, GetCreatedAndAssignedOrdersResponse>, GetCreatedAndAssignedOrdersHandler>();
 builder.Services.AddScoped<IRequestHandler<GetBusyCouriersQuery, GetCouriersResponse>, GetBusyCouriersHandler>();
+
+// gRPC
+builder.Services.AddScoped<IGeoClient, GeoClient>();
 
 // HTTP Handlers
 builder.Services.AddControllers(options => { options.InputFormatters.Insert(0, new InputFormatterStream()); })
