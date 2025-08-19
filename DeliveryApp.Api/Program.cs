@@ -1,5 +1,6 @@
 using Confluent.Kafka;
 using DeliveryApp.Api;
+using DeliveryApp.Api.Adapters.Kafka.CreateOrder;
 using DeliveryApp.Core.Application.UseCases.Commands.AssignCouriersToOrders;
 using DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
 using DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
@@ -113,6 +114,14 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<GeneratePathParamsValidationFilter>();
 });
 builder.Services.AddSwaggerGenNewtonsoftSupport();
+
+// Kafka
+builder.Services.Configure<HostOptions>(options =>
+{
+    options.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore;
+    options.ShutdownTimeout = TimeSpan.FromSeconds(30);
+});
+builder.Services.AddHostedService<ConsumerService>();
 
 var app = builder.Build();
 

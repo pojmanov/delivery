@@ -64,7 +64,8 @@ namespace DeliveryApp.Api.Adapters.Http
         public override async Task<IActionResult> CreateOrder()
         {
             Guid orderId = Guid.NewGuid();
-            CreateOrderCommand command = new CreateOrderCommand(orderId, Street);
+            int orderVolume = Random.Shared.Next(1, 21); // от одного до 20
+            CreateOrderCommand command = new CreateOrderCommand(orderId, Street, orderVolume);
             try
             {
                 await _mediator.Send(command);
