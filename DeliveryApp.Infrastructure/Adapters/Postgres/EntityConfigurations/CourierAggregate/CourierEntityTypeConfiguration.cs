@@ -32,12 +32,10 @@ namespace DeliveryApp.Infrastructure.Adapters.Postgres.EntityConfigurations.Cour
                 });
             builder.Navigation(entity => entity.Location).IsRequired();
 
-            /*
             builder.HasMany(c => c.StoragePlaces)
                 .WithOne() // У StoragePlace нет навигационного свойства к Courier
                 .HasForeignKey("CourierId") // Используем теневое свойство
                 .IsRequired();
-            */
         }
     }
 }

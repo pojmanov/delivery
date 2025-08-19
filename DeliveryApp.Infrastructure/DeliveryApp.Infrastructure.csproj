@@ -38,10 +38,12 @@
         <None Remove="Adapters\Grpc\GeoService\grpc.proto" />
         <None Remove="Adapters\Kafka\BasketConfirmed\Contract.proto" />
         <None Remove="Adapters\Grpc\GeoService\Contract.proto" />
+        <None Remove="Adapters\Kafka\Contract.proto" />
     </ItemGroup>
 
     <ItemGroup>
       <Protobuf Include="Adapters\Grpc\GeoSerive\Contract.proto" />
+      <Protobuf Include="Adapters\Kafka\CompleteOrder\Contract.proto" />
     </ItemGroup>
 
 </Project>
