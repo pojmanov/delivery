@@ -8,7 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Confluent.Kafka" Version="2.11.0" />
+		<PackageReference Include="JsonNet.ContractResolvers" Version="2.0.0"/>
+		<PackageReference Include="Confluent.Kafka" Version="2.11.0" />
         <PackageReference Include="Google.Protobuf" Version="3.31.1" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
         <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
