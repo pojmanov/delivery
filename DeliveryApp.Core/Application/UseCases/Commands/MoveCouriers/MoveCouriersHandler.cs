@@ -57,7 +57,6 @@ namespace DeliveryApp.Core.Application.UseCases.Commands.MoveCouriers
                 if (order.Location == courier.Location)
                 {
                     courier.СompleteOrder(order);
-                    order.Complete();
                 }
                 _courierRepository.Update(courier);
                 _orderRepository.Update(order);

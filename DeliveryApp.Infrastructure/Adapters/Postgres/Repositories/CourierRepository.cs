@@ -48,6 +48,7 @@ namespace DeliveryApp.Infrastructure.Adapters.Postgres.Repositories
         public async Task<Courier> GetAsync(Guid courierId)
         {
             return await _dbContext.Couriers
+                .Include(x => x.StoragePlaces)
                 .SingleOrDefaultAsync(c => c.Id == courierId);
         }
 
@@ -58,6 +59,7 @@ namespace DeliveryApp.Infrastructure.Adapters.Postgres.Repositories
         public IList<Courier> GetAllAvailable()
         {
             return _dbContext.Couriers
+               .Include(x => x.StoragePlaces)
                .Where(c => c.StoragePlaces.All(sp => sp.OrderId == null)).ToList();
         }
     }

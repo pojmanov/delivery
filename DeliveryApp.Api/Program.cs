@@ -1,12 +1,15 @@
 using Confluent.Kafka;
 using DeliveryApp.Api;
+using DeliveryApp.Api.Adapters.BackgroundJobs;
 using DeliveryApp.Api.Adapters.Kafka.CreateOrder;
+using DeliveryApp.Core.Application.DomainEventHandlers.OrderCompleted;
 using DeliveryApp.Core.Application.UseCases.Commands.AssignCouriersToOrders;
 using DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
 using DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
 using DeliveryApp.Core.Application.UseCases.Commands.MoveCouriers;
 using DeliveryApp.Core.Application.UseCases.Queries.GetBusyCouriers;
 using DeliveryApp.Core.Application.UseCases.Queries.GetCreatedAndAssignedOrders;
+using DeliveryApp.Core.Domain.Model.OrderAggregate.DomainEvents;
 using DeliveryApp.Core.Domain.Services;
 using DeliveryApp.Core.Ports;
 using DeliveryApp.Infrastructure.Adapters.Grpc.GeoSerive;
@@ -22,7 +25,9 @@ using OpenApi.Filters;
 using OpenApi.Formatters;
 using OpenApi.OpenApi;
 using Primitives;
+using Quartz;
 using System.Reflection;
+using CompleteOrder = DeliveryApp.Infrastructure.Adapters.Kafka.CompleteOrder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +84,10 @@ builder.Services.AddScoped<IRequestHandler<AssignCouriersToOrdersCommand>, Assig
 builder.Services.AddScoped<IRequestHandler<GetCreatedAndAssignedOrdersQuery, GetCreatedAndAssignedOrdersResponse>, GetCreatedAndAssignedOrdersHandler>();
 builder.Services.AddScoped<IRequestHandler<GetBusyCouriersQuery, GetCouriersResponse>, GetBusyCouriersHandler>();
 
+// Notifications
+builder.Services.AddScoped<INotificationBusProducer, CompleteOrder.Producer>();
+builder.Services.AddScoped<INotificationHandler<OrderCompletedDomainEvent>, OrderCompletedDomainEventHandler>();
+
 // gRPC
 builder.Services.AddScoped<IGeoClient, GeoClient>();
 
@@ -122,6 +131,29 @@ builder.Services.Configure<HostOptions>(options =>
     options.ShutdownTimeout = TimeSpan.FromSeconds(30);
 });
 builder.Services.AddHostedService<ConsumerService>();
+
+// CRON Jobs
+builder.Services.AddQuartz(configure =>
+{
+    var assignOrdersJobKey = new JobKey(nameof(AssignOrdersJob));
+    var moveCouriersJobKey = new JobKey(nameof(MoveCouriersJob));
+    configure
+        .AddJob<AssignOrdersJob>(assignOrdersJobKey)
+        .AddTrigger(
+            trigger => trigger.ForJob(assignOrdersJobKey)
+                .WithSimpleSchedule(
+                    schedule => schedule.WithIntervalInSeconds(1)
+                        .RepeatForever()))
+        .AddJob<MoveCouriersJob>(moveCouriersJobKey)
+        .AddTrigger(
+            trigger => trigger.ForJob(moveCouriersJobKey)
+                .WithSimpleSchedule(
+                    schedule => schedule.WithIntervalInSeconds(2)
+                        .RepeatForever()));
+    configure.UseMicrosoftDependencyInjectionJobFactory();
+});
+builder.Services.AddQuartzHostedService();
+
 
 var app = builder.Build();
 

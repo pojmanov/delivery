@@ -1,4 +1,5 @@
 ﻿using DeliveryApp.Core.Domain.Model.CourierAggregate;
+using DeliveryApp.Core.Domain.Model.OrderAggregate.DomainEvents;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 using Primitives;
 
@@ -76,6 +77,7 @@ public sealed class Order : Aggregate<Guid>
             throw new OrderException(Errors.CantCompleteNotAssignedOrder);
         }
         Status = OrderStatus.Completed;
+        RaiseDomainEvent(new OrderCompletedDomainEvent(Id, CourierId.Value));
     }
 
     private static class Errors
